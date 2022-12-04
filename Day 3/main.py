@@ -12,9 +12,6 @@ def split_lines(line):
 
     return first_compartment, second_compartment
 
-# Lowercase Letter We Take 96
-# Uppercase Letter We Take 38
-
 def compare_compartments(first_compartment, second_compartment):
     letter_priority = 0
     
@@ -30,13 +27,41 @@ def compare_compartments(first_compartment, second_compartment):
                 
     return letter_priority
 
+def compare_three_elves(first_elf, second_elf, third_elf):
+    letter_priority = 0
+
+    for letter in first_elf:
+        if (letter in second_elf) & (letter in third_elf):
+            decimal_letter = ord(letter)
+            if decimal_letter > 96:
+                letter_priority = decimal_letter - 96
+                break
+            else:
+                letter_priority = decimal_letter - 38
+                break
+
+    return letter_priority
+
+
 def main():
     data = read_in_file_to_list('data/input.txt')
     total = 0
-    for rucksack in data:
-        first_compartment, second_compartment = split_lines(rucksack)
-        priority = compare_compartments(first_compartment, second_compartment)
-        total += priority
+    
+    # for rucksack in data:
+    #     first_compartment, second_compartment = split_lines(rucksack)
+    #     priority = compare_compartments(first_compartment, second_compartment)
+    #     total += priority
+
+    data_len = len(data)
+
+    for i in range(0, len(data), 3):
+        three_elves = data[i:i+3]
+        first_elf = three_elves[0].strip('\n')
+        second_elf = three_elves[1].strip('\n')
+        third_elf = three_elves[2].strip('\n')            
+
+        total += compare_three_elves(first_elf, second_elf, third_elf)    
+
     print(total)
 
 if __name__ == '__main__':
