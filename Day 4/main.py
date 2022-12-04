@@ -3,7 +3,7 @@ def read_in_file_to_list(filename):
         data = file.readlines()
         return data
 
-def compare_assignment_pairs(data):
+def are_assignment_pairs_completley_contained(data):
     count = 0
     for assigment_pair in data:
         pair_one, pair_two = assigment_pair.split(',')
@@ -20,13 +20,32 @@ def compare_assignment_pairs(data):
             print("Two is within One!")
             count += 1
 
+    return count
+
+def any_overlap_in_the_pairs(data):
+    count = 0
+    for assigment_pair in data:
+        pair_one, pair_two = assigment_pair.split(',')
+        lower_bound_pair_one, upper_pound_pair_one = pair_one.split('-')
+        lower_bound_pair_two, upper_pound_pair_two = pair_two.split('-')
+     
+        if (int(lower_bound_pair_one) >= int(lower_bound_pair_two)) & (int(upper_pound_pair_one) <= (int(upper_pound_pair_two))):
+            count += 1
+        elif (int(lower_bound_pair_two) >= int(lower_bound_pair_one)) & (int(upper_pound_pair_two) <= (int(upper_pound_pair_one))):
+            count +=1
+        elif (int(lower_bound_pair_one) == int(lower_bound_pair_two)) | (int(lower_bound_pair_one) == int(upper_pound_pair_two)) | (int(upper_pound_pair_one) == int(lower_bound_pair_two)) | (int(upper_pound_pair_one) == int(upper_pound_pair_two)) :
+            count +=1
+        elif (int(upper_pound_pair_one) > int(lower_bound_pair_two)) & ((int(upper_pound_pair_one) < int(upper_pound_pair_two))):
+            count +=1
+        elif (int(upper_pound_pair_two) > int(lower_bound_pair_one)) & ((int(upper_pound_pair_two) < int(upper_pound_pair_one))):
+            count +=1 
 
     return count
 
-
 def main():
     data = read_in_file_to_list('data/input.txt')
-    count = compare_assignment_pairs(data)
+    # count = are_assignment_pairs_completley_contained(data)
+    count = any_overlap_in_the_pairs(data)
     print(count)
 
 if __name__ == '__main__':
