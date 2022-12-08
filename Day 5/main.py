@@ -51,8 +51,8 @@ def sort_the_stacks(stacks, instructions):
         stack_to = instruction[2]
 
         for i in range(1, no_of_crates+1):
-            crate_to_move = stacks[stack_from].pop()
-            stacks_to_sort[stack_to].append(crate_to_move)
+            crate_to_move = stacks[stack_from].pop(0)
+            stacks_to_sort[stack_to].insert(0, crate_to_move)
 
     sorted_stacks = stacks_to_sort
 
@@ -60,15 +60,14 @@ def sort_the_stacks(stacks, instructions):
 
 def main():
     data = read_in_file_to_list('data/input.txt')
-    raw_stacks = data[0:8]
-    raw_instructions = data[10:-1]
+    raw_stacks = data[0:9]
+    raw_instructions = data[10:len(data)+1]
     parsed_stacks = parse_stacks(raw_stacks)
     parsed_instructions = parse_instructions(raw_instructions)
     sorted_stacks = sort_the_stacks(parsed_stacks, parsed_instructions)
     
-    for i in range(1, 10):
-        print(sorted_stacks[i])
-        print()
+    for i in range(1,10):
+        print(sorted_stacks[i][0].strip('[').strip(']'), end='')
 
 if __name__ == '__main__':
     main()
